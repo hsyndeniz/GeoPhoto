@@ -15,9 +15,11 @@ import { MMKV } from 'react-native-mmkv';
 
 import { api } from '../services/api';
 import theme from './theme';
+import efix from './efix';
 
 const reducers = combineReducers({
   theme,
+  efix,
   [api.reducerPath]: api.reducer,
 });
 

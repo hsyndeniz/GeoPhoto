@@ -944,32 +944,60 @@ PODS:
     - React-Codegen
     - React-RCTFabric
     - ReactCommon/turbomodule/core
-  - react-native-mmkv (2.10.0):
+  - react-native-mmkv (2.10.1):
     - MMKV (>= 1.2.13)
     - React-Core
-  - react-native-safe-area-context (4.6.3):
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - react-native-safe-area-context/common (= 4.6.3)
-    - react-native-safe-area-context/fabric (= 4.6.3)
-    - ReactCommon/turbomodule/core
-  - react-native-safe-area-context/common (4.6.3):
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - ReactCommon/turbomodule/core
-  - react-native-safe-area-context/fabric (4.6.3):
-    - RCT-Folly
+  - react-native-safe-area-context (4.7.1):
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
     - RCTRequired
     - RCTTypeSafety
     - React-Codegen
     - React-Core
-    - react-native-safe-area-context/common
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - react-native-safe-area-context/common (= 4.7.1)
+    - react-native-safe-area-context/fabric (= 4.7.1)
+    - React-NativeModulesApple
     - React-RCTFabric
+    - React-utils
+    - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-safe-area-context/common (4.7.1):
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-safe-area-context/fabric (4.7.1):
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - react-native-safe-area-context/common
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - React-NativeModulesApple (0.72.1):
     - hermes-engine
     - React-callinvoker
@@ -1098,7 +1126,9 @@ PODS:
     - React-perflogger (= 0.72.1)
   - RNCMaskedView (0.2.9):
     - React-Core
-  - RNGestureHandler (2.12.0):
+  - RNFS (2.20.0):
+    - React-Core
+  - RNGestureHandler (2.12.1):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -1106,7 +1136,7 @@ PODS:
     - React-Codegen
     - React-RCTFabric
     - ReactCommon/turbomodule/core
-  - RNReanimated (3.3.0):
+  - RNReanimated (3.4.2):
     - DoubleConversion
     - FBLazyVector
     - glog
@@ -1136,7 +1166,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.22.0):
+  - RNScreens (3.24.0):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -1144,8 +1174,8 @@ PODS:
     - React-Codegen
     - React-RCTFabric
     - ReactCommon/turbomodule/core
-    - RNScreens/common (= 3.22.0)
-  - RNScreens/common (3.22.0):
+    - RNScreens/common (= 3.24.0)
+  - RNScreens/common (3.24.0):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -1154,6 +1184,10 @@ PODS:
     - React-RCTFabric
     - ReactCommon/turbomodule/core
   - SocketRocket (0.6.1)
+  - VisionCamera (3.0.0-rc.7):
+    - React
+    - React-callinvoker
+    - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1230,9 +1264,11 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1348,12 +1384,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1397,8 +1437,8 @@ SPEC CHECKSUMS:
   React-logger: b8103c9b04e707b50cdd2b1aeb382483900cbb37
   react-native-flipper: 54df9001d6236e4048d941043b41a9ef47f85981
   react-native-image-picker: 9b4b1d0096500050cbdabf8f4fd00b771065d983
-  react-native-mmkv: 725623a679fec884bf18a37400e753afb8a1b924
-  react-native-safe-area-context: 405fb2c993ba6b670652292112e14bbf7e261818
+  react-native-mmkv: dea675cf9697ad35940f1687e98e133e1358ef9f
+  react-native-safe-area-context: a283130af276caa22ecfed30c3d1eb450bc83439
   React-NativeModulesApple: 4f31a812364443cee6ef768d256c594ad3b20f53
   React-perflogger: 3d501f34c8d4b10cb75f348e43591765788525ad
   React-RCTActionSheet: f5335572c979198c0c3daff67b07bd1ad8370c1d
@@ -1418,10 +1458,12 @@ SPEC CHECKSUMS:
   React-utils: 0a70ea97d4e2749f336b450c082905be1d389435
   ReactCommon: e593d19c9e271a6da4d0bd7f13b28cfeae5d164b
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
-  RNGestureHandler: d8224aad6d7081834ae6e6cf925397059485b69e
-  RNReanimated: 3ce2aec600ad2ef47a5927abf2742329d7a190e9
-  RNScreens: 9d61ea7595ba14c8ef38c010e1e918bcc51fc5c3
+  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
+  RNGestureHandler: 0f92ab218707c97810df75609886828ee1b7c5e3
+  RNReanimated: 5008fe999d57038a1c5c1163044854d453f41b98
+  RNScreens: e114ddbc9b91fbde662870c4256196ab0833314b
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  VisionCamera: 6278b4556b4027f0ccbb5c57c6bfa16d490b9685
   Yoga: 65286bb6a07edce5e4fe8c90774da977ae8fc009
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

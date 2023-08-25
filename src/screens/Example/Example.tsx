@@ -1,41 +1,21 @@
+import { View, ActivityIndicator, Text, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
-import {
-  View,
-  ActivityIndicator,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  Alert,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Brand } from '../../components';
-import { useTheme } from '../../hooks';
-import { useLazyFetchOneQuery } from '../../services/modules/users';
-import { changeTheme, ThemeState } from '../../store/theme';
 import i18next from 'i18next';
+import { useTheme } from '../../hooks';
+import { Colors } from '../../theme/Variables';
+import { changeTheme, ThemeState } from '../../store/theme';
+import { setImage, setMetadata, EfixState } from '../../store/efix';
+import { CameraOptions, launchCamera } from 'react-native-image-picker';
+import { getExif, setExif } from '../../utils/exif';
 
 const Example = () => {
+  const [picture, setPicture] = React.useState<string | null>(null);
+  const state = useSelector((_state: { efix: EfixState }) => _state.efix);
   const { t } = useTranslation(['example', 'welcome']);
-  const {
-    Common,
-    Fonts,
-    Gutters,
-    Layout,
-    Images,
-    darkMode: isDark,
-  } = useTheme();
+  const { Common, Fonts, Gutters, Layout, Images, darkMode: isDark } = useTheme();
   const dispatch = useDispatch();
-
-  const [fetchOne, { data, isSuccess, isLoading, isFetching }] =
-    useLazyFetchOneQuery();
-
-  useEffect(() => {
-    if (isSuccess && data?.name) {
-      Alert.alert(t('example:helloUser', { name: data.name }));
-    }
-  }, [isSuccess, data]);
 
   const onChangeTheme = ({ theme, darkMode }: Partial<ThemeState>) => {
     dispatch(changeTheme({ theme, darkMode }));
@@ -45,190 +25,87 @@ const Example = () => {
     i18next.changeLanguage(lang);
   };
 
-  return (
-    <ScrollView
-      style={Layout.fill}
-      contentContainerStyle={[
-        Layout.fullSize,
-        Layout.fill,
-        Layout.colCenter,
-        Layout.scrollSpaceBetween,
-      ]}
-    >
-      <View
-        style={[
-          Layout.fill,
-          Layout.relative,
-          Layout.fullWidth,
-          Layout.justifyContentCenter,
-          Layout.alignItemsCenter,
-        ]}
-      >
-        <View
-          style={[
-            Layout.absolute,
-            {
-              height: 250,
-              width: 250,
-              backgroundColor: isDark ? '#000000' : '#DFDFDF',
-              borderRadius: 140,
-            },
-          ]}
-        />
-        <Image
-          style={[
-            Layout.absolute,
-            {
-              bottom: '-30%',
-              left: 0,
-            },
-          ]}
-          source={Images.sparkles.bottomLeft}
-          resizeMode={'contain'}
-        />
-        <View
-          style={[
-            Layout.absolute,
-            {
-              height: 300,
-              width: 300,
-              transform: [{ translateY: 40 }],
-            },
-          ]}
-        >
-          <Brand height={300} width={300} />
-        </View>
-        <Image
-          style={[
-            Layout.absolute,
-            Layout.fill,
-            {
-              top: 0,
-              left: 0,
-            },
-          ]}
-          source={Images.sparkles.topLeft}
-          resizeMode={'contain'}
-        />
-        <Image
-          style={[
-            Layout.absolute,
-            {
-              top: '-5%',
-              right: 0,
-            },
-          ]}
-          source={Images.sparkles.top}
-          resizeMode={'contain'}
-        />
-        <Image
-          style={[
-            Layout.absolute,
-            {
-              top: '15%',
-              right: 20,
-            },
-          ]}
-          source={Images.sparkles.topRight}
-          resizeMode={'contain'}
-        />
-        <Image
-          style={[
-            Layout.absolute,
-            {
-              bottom: '-10%',
-              right: 0,
-            },
-          ]}
-          source={Images.sparkles.right}
-          resizeMode={'contain'}
-        />
+  useEffect(() => {
+    console.log('useEffect');
+  }, []);
 
-        <Image
-          style={[
-            Layout.absolute,
-            {
-              top: '75%',
-              right: 0,
-            },
-          ]}
-          source={Images.sparkles.bottom}
-          resizeMode={'contain'}
-        />
-        <Image
-          style={[
-            Layout.absolute,
-            {
-              top: '60%',
-              right: 0,
-            },
-          ]}
-          source={Images.sparkles.bottomRight}
-          resizeMode={'contain'}
-        />
+  const takePicture = async () => {
+    const options: CameraOptions = {
+      mediaType: 'photo',
+      quality: 1,
+      saveToPhotos: false,
+      includeBase64: true,
+      includeExtra: true,
+    };
+    const response = await launchCamera(options);
+
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.errorMessage || response.errorCode) {
+      console.log('ImagePicker Error: ', response.errorMessage);
+    } else {
+      if (!response.assets) {
+        return;
+      }
+      setExif(response?.assets[0], {
+        latitude: 41.0428465,
+        longitude: 29.0075283,
+      })
+        .then(res => {
+          setPicture(res.jpeg_base64);
+          getExif(res.base64)
+            .then(exif => {
+              console.log('exif', exif);
+            })
+            .catch(err => {
+              console.log('getExif err', err);
+            });
+        })
+        .catch(err => {
+          console.log('setExif err', err);
+        });
+    }
+  };
+
+  return (
+    <ScrollView style={Layout.fill} contentContainerStyle={[Layout.fullSize, Layout.fill, Layout.colCenter, Layout.scrollSpaceBetween]}>
+      <View style={[Layout.fill, Layout.relative, Layout.fullWidth, Layout.justifyContentCenter, Layout.alignItemsCenter]}>
+        <Image source={{ uri: state.image?.uri }} resizeMode="center" style={[Layout.absolute, styles.image]} />
+
+        <Image style={[Layout.absolute, styles.star]} source={Images.sparkles.topRight} resizeMode={'contain'} />
       </View>
-      <View
-        style={[
-          Layout.fill,
-          Layout.justifyContentBetween,
-          Layout.alignItemsStart,
-          Layout.fullWidth,
-          Gutters.regularHPadding,
-        ]}
-      >
+      <View style={[Layout.fill, Layout.justifyContentBetween, Layout.alignItemsStart, Layout.fullWidth, Gutters.regularHPadding]}>
         <View>
           <Text style={[Fonts.titleRegular]}>{t('welcome:title')}</Text>
-          <Text
-            style={[Fonts.textBold, Fonts.textRegular, Gutters.regularBMargin]}
-          >
-            {t('welcome:subtitle')}
-          </Text>
-          <Text style={[Fonts.textSmall, Fonts.textLight]}>
-            {t('welcome:description')}
-          </Text>
+          <Text style={[Fonts.textBold, Fonts.textRegular, Gutters.regularBMargin]}>{t('welcome:subtitle')}</Text>
+          <Text style={[Fonts.textSmall, Fonts.textLight]}>{t('welcome:description')}</Text>
         </View>
 
-        <View
-          style={[
-            Layout.row,
-            Layout.justifyContentBetween,
-            Layout.fullWidth,
-            Gutters.smallTMargin,
-          ]}
-        >
-          <TouchableOpacity
-            style={[Common.button.circle, Gutters.regularBMargin]}
-            onPress={() => fetchOne(`${Math.ceil(Math.random() * 10 + 1)}`)}
-          >
-            {isFetching || isLoading ? (
-              <ActivityIndicator />
-            ) : (
-              <Image
-                source={Images.icons.send}
-                style={{ tintColor: isDark ? '#A6A4F0' : '#44427D' }}
-              />
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[Common.button.circle, Gutters.regularBMargin]}
-            onPress={() => onChangeTheme({ darkMode: !isDark })}
-          >
+        <View style={[Layout.row, Layout.justifyContentBetween, Layout.fullWidth, Gutters.smallTMargin]}>
+          <TouchableOpacity style={[Common.button.circle, Gutters.regularBMargin]} onPress={takePicture}>
             <Image
-              source={Images.icons.colors}
-              style={{ tintColor: isDark ? '#A6A4F0' : '#44427D' }}
+              source={Images.icons.send}
+              style={{
+                tintColor: isDark ? '#A6A4F0' : Colors.circleButtonColor,
+              }}
             />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[Common.button.circle, Gutters.regularBMargin]}
-            onPress={() =>
-              onChangeLanguage(i18next.language === 'fr' ? 'en' : 'fr')
-            }
-          >
+          <TouchableOpacity style={[Common.button.circle, Gutters.regularBMargin]} onPress={() => onChangeTheme({ darkMode: !isDark })}>
+            <Image
+              source={Images.icons.colors}
+              style={{
+                tintColor: isDark ? '#A6A4F0' : Colors.circleButtonColor,
+              }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[Common.button.circle, Gutters.regularBMargin]} onPress={() => onChangeLanguage(i18next.language === 'fr' ? 'en' : 'fr')}>
             <Image
               source={Images.icons.translate}
-              style={{ tintColor: isDark ? '#A6A4F0' : '#44427D' }}
+              style={{
+                tintColor: isDark ? '#A6A4F0' : Colors.circleButtonColor,
+              }}
             />
           </TouchableOpacity>
         </View>
@@ -238,3 +115,15 @@ const Example = () => {
 };
 
 export default Example;
+
+const styles = StyleSheet.create({
+  image: {
+    height: 240,
+    width: 240,
+    borderRadius: 20,
+  },
+  star: {
+    top: '5%',
+    right: 16,
+  },
+});
