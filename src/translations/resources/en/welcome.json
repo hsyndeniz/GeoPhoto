@@ -1,5 +1,12 @@
 {
   "title": "Welcome on",
   "subtitle": "The $t(common:appName.full)",
-  "description": "Do you want to discover some features? Just click on one of the three buttons at the bottom of the screen. The first one allows you to take a picture. The second lets you change the theme color. And the third allows you to change the language."
+  "description": "Do you want to discover some features? Just click on one of the three buttons at the bottom of the screen. The first one allows you to take a picture. The second lets you change the theme color. And the third allows you to change the language.",
+  "dataToModify": "Exif(metadata) data to insert",
+  "takePicture": "Take a picture",
+  "updateMetadata": "Update metadata",
+  "locationMessage": "You need to activate the location to use this feature",
+  "sharePicture": "Share picture",
+  "changeTheme": "Change theme",
+  "changeLanguage": "Change language"
 }
