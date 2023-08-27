@@ -12,7 +12,7 @@ module.exports = {
     'react/require-default-props': ['error'],
     'react/default-props-match-prop-types': ['error'],
     'react/sort-prop-types': ['error'],
-    'max-len': 'off',
+    'max-len': ['error', { code: 150 }],
   },
   settings: {
     'import/resolver': {
