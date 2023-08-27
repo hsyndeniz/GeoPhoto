@@ -7,6 +7,7 @@ export const Colors = {
   textGray200: '#BABABA',
   inputBackground: '#3a3a3a',
   circleButtonBackground: '#252732',
+  circleButtonColor: '#A6A4F0',
 };
 
 export const NavigationColors: Partial<ThemeNavigationColors> = {
