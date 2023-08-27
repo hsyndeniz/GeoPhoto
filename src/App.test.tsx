@@ -10,6 +10,15 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { render } from '@testing-library/react-native';
 
+// Mock Geolocation
+jest.mock('@react-native-community/geolocation', () => ({
+  getCurrentPosition: jest.fn(),
+}));
+
+jest.mock('react-native-fs', () => ({
+  read: jest.fn(),
+}));
+
 it('App renders correctly', () => {
   const component = (
     <Provider store={store}>
