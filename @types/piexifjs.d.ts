@@ -1,12 +1,7 @@
 declare module 'piexifjs' {
   export interface GPSHelper {
-    degToDmsRational: (
-      degFloat: number,
-    ) => [[number, number], [number, number], [number, number]];
-    dmsRationalToDeg: (
-      dmsArray: [[number, number], [number, number], [number, number]],
-      ref: 'N' | 'S' | 'E' | 'W',
-    ) => number;
+    degToDmsRational: (degFloat: number) => [[number, number], [number, number], [number, number]];
+    dmsRationalToDeg: (dmsArray: [[number, number], [number, number], [number, number]], ref: 'N' | 'S' | 'E' | 'W') => number;
   }
 
   interface ExifDict {

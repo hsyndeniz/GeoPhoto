@@ -10,5 +10,4 @@ export type ApplicationStackParamList = {
   Main: NavigatorScreenParams<MainParamsList>;
 };
 
-export type ApplicationScreenProps =
-  StackScreenProps<ApplicationStackParamList>;
+export type ApplicationScreenProps = StackScreenProps<ApplicationStackParamList>;

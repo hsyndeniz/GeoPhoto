@@ -32,27 +32,10 @@ const images = Images(DefaultVariables);
 const layout = Layout(DefaultVariables);
 
 export type CommonParams<C> = ThemeVariables &
-  Pick<
-    Theme<typeof fonts, typeof gutters, typeof images, typeof layout, C>,
-    'Layout' | 'Gutters' | 'Fonts' | 'Images'
-  >;
+  Pick<Theme<typeof fonts, typeof gutters, typeof images, typeof layout, C>, 'Layout' | 'Gutters' | 'Fonts' | 'Images'>;
 
-type Margins =
-  | 'Margin'
-  | 'BMargin'
-  | 'TMargin'
-  | 'RMargin'
-  | 'LMargin'
-  | 'VMargin'
-  | 'HMargin';
-type Paddings =
-  | 'Padding'
-  | 'BPadding'
-  | 'TPadding'
-  | 'RPadding'
-  | 'LPadding'
-  | 'VPadding'
-  | 'HPadding';
+type Margins = 'Margin' | 'BMargin' | 'TMargin' | 'RMargin' | 'LMargin' | 'VMargin' | 'HMargin';
+type Paddings = 'Padding' | 'BPadding' | 'TPadding' | 'RPadding' | 'LPadding' | 'VPadding' | 'HPadding';
 
 type MarginKeys = `${keyof ThemeVariables['MetricsSizes']}${Margins}`;
 type PaddingKeys = `${keyof ThemeVariables['MetricsSizes']}${Paddings}`;
